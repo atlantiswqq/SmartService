@@ -1,4 +1,5 @@
 
+
    ____    __
   / __/___/ /  ___
  / _// __/ _ \/ _ \
@@ -8,3 +9,15 @@ https://echo.labstack.com
 ____________________________________O/_______
                                     O\
 ⇨ http server started on [::]:8001
+method=POST, uri=/qibao/dialog, status=200
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v4.0.0
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:8001
+method=POST, uri=/qibao/dialog, status=200

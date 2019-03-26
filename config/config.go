@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"io"
 	"os"
@@ -17,7 +18,7 @@ func logWriter() io.Writer{
 		panic(err)
 	}
 	logPath:= filepath.Join(BasePath,"log","info.log")
-	file,err:=os.OpenFile(logPath,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0644)
+	file,err:=os.OpenFile(logPath,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0666)
 	if err !=nil{
 		fmt.Println(err)
 	}
@@ -29,6 +30,12 @@ func InitConfig(e *echo.Echo){
 	e.Debug = true
 	// 设置log路径和级别
 	logW:=logWriter()
+	e.Use(
+		middleware.LoggerWithConfig(
+			middleware.LoggerConfig{
+				Format: "method=${method}, uri=${uri}, status=${status}\n",
+				Output: logW,
+			}))
 	e.Logger.SetOutput(logW)
 	e.Logger.SetLevel(log.DEBUG)
 	// 隐藏echo横幅
