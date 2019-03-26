@@ -12,12 +12,12 @@ import (
 
 
 func logWriter() io.Writer{
-	BasePath,err:=filepath.Abs(filepath.Dir(os.Args[0]))
+	BasePath,err:=os.Getwd()
 	if err !=nil{
 		panic(err)
 	}
 	logPath:= filepath.Join(BasePath,"log","info.log")
-	file,err:=os.Open(logPath)
+	file,err:=os.OpenFile(logPath,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0644)
 	if err !=nil{
 		fmt.Println(err)
 	}
