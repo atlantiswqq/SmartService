@@ -10,8 +10,9 @@ import (
 )
 
 
-var Plog *privateLog.QscLog{}
-*Plog={os.Getwd(),"Smart"}
+var Plog *privateLog.QscLog= new(privateLog.QscLog)
+Plog = Plog.SetBasePath(os.Getwd())
+Plog = Plog.SetProjectName("Smart")
 
 // service test
 func Ping(c echo.Context) error{

@@ -13,6 +13,15 @@ type QscLog struct{
 	ProjectName string
 }
 
+func (q *QscLog) SetBasePath(path string) *QscLog{
+	q.BasePath = path
+	return q
+}
+
+func (q *QscLog) SetProjectName(name string) *QscLog{
+	q.ProjectName= name
+	return q
+}
 func (q *QscLog) GetOsFile(filename string)(*os.File,error){
 	fileAbsPath:=filepath.Join(q.BasePath,"log",q.ProjectName+"-"+filename)
 	file,err:=os.OpenFile(fileAbsPath,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0666)
