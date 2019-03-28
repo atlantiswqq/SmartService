@@ -17,7 +17,6 @@ func init() {
 		panic(err)
 	}
 	pLog = new(privateLog.QscLog)
-	//parentPath:= filepath.Dir(basePath)
 	pLog.SetBasePath(basePath)
 	pLog.SetProjectName("Smart")
 	pLog.All("log init success")
