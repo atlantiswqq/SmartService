@@ -1,23 +1,31 @@
 package views
 
 import (
-	"SmartService/mylogconf"
-	"encoding/json"
+	"SmartService/logconf"
+	"fmt"
 	"github.com/labstack/echo"
-	"github.com/labstack/gommon/log"
 	"net/http"
+	"os"
 	"strings"
 )
 
+var pLog *privateLog.QscLog
 
-var Plog *privateLog.QscLog= new(privateLog.QscLog)
-Plog = Plog.SetBasePath(os.Getwd())
-Plog = Plog.SetProjectName("Smart")
-
+func init() {
+	basePath,err:= os.Getwd()
+	if err !=nil{
+		panic(err)
+	}
+	pLog = new(privateLog.QscLog)
+	//parentPath:= filepath.Dir(basePath)
+	pLog.SetBasePath(basePath)
+	pLog.SetProjectName("Smart")
+	pLog.All("log init success")
+}
 // service test
 func Ping(c echo.Context) error{
-	Plog.Info("Test GET request.")
-	Plog.All("Test GET request")
+	pLog.Info("Test GET request.")
+	pLog.All("Test GET request")
 	return c.String(http.StatusOK,"service is ok.")
 }
 
@@ -30,12 +38,9 @@ func Dialog(c echo.Context) error{
 	if err:=c.Bind(s);err !=nil{
 		return err
 	}
-	jsonStr,err:=json.Marshal(s)
-	if err !=nil{
-		log.Fatal(err)
-	}
-	Plog.Debug(string(jsonStr))
+	pLog.Debug(fmt.Sprintf("%+v\n",*s))
 	result := new(Sentence)
 	result.Lang = strings.ToUpper(s.Lang)
+	pLog.All(fmt.Sprintf("%+v",*result))
 	return c.JSON(http.StatusOK,result)
 }

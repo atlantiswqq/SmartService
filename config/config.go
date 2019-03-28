@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"io"
 	"os"
@@ -29,15 +28,7 @@ func InitConfig(e *echo.Echo){
 	// 开启debug模式
 	e.Debug = true
 	// 设置log路径和级别
-	logW:=logWriter()
-	e.Use(
-		middleware.LoggerWithConfig(
-			middleware.LoggerConfig{
-				Format: "method=${method}, uri=${uri}, status=${status}\n",
-				Output: logW,
-			}))
-	e.Logger.SetOutput(logW)
-	e.Logger.SetLevel(log.DEBUG)
+	e.Logger.SetLevel(log.OFF)
 	// 隐藏echo横幅
 	e.HideBanner=false
 	// 设置超时时间为60秒
